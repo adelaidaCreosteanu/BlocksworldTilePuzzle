@@ -14,7 +14,15 @@ public class Board {
     }
 
     public boolean isLegal (int newX, int newY) {
-        return (newX >= 0 && newY >= 0 && newX < size && newY < size);
+        int positionDifference = Math.abs(newX - agentX) + Math.abs(newY - agentY);
+
+        if (positionDifference != 1) {     // new position not adjacent to current
+            return false;
+        }
+        if (newX < 0 || newY < 0 || newX > size || newY > size) {  // position ouf of borders
+            return false;
+        }
+        return true;
     }
 
     /*
@@ -50,7 +58,7 @@ public class Board {
                 break;
             }
         }
-        if (col == -1) return false;    // I didn't find a block on the second row
+        if (col == -1) return false;    // Didn't find a block on the second row
 
         for (int i = 1; i < size; i++) {
             if (state[i][col] != 'A' + i) return false;   // Incorrect block found
@@ -71,7 +79,7 @@ public class Board {
                 }else if (state[i][j] == 0) {
                     System.out.print("0 ");
                 } else {
-                    System.out.print((char)state[i][j]);
+                    System.out.print((char) state[i][j] + " ");
                 }
             }
             System.out.println();
