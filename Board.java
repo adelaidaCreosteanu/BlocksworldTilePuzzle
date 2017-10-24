@@ -1,29 +1,20 @@
 public class Board {
-    private int size;
     private int[][] state;
+    private int size;
     private int agentX;
     private int agentY;
 
-    public Board (int size) {
-        this.size = size;
-        state = new int[size][size]; // initialises all values to 0
+    public Board (int[][] oldState, int x, int y, int newX, int newY) {
+        state = oldState.clone();   // test this
+        size = state.length;
+        agentX = x;
+        agentY = y;
 
-        // Put in letter blocks on the bottom row
-        for (int j = 0; j < size-1; j ++) {
-            state[size-1][j] = 65+j;  // 65 == 'A'
-        }
-
-        // Put in the agent in the bottom-right corner
-        agentX = size-1;
-        agentY = size-1;
+        moveAgent(newX,newY);
     }
 
-    public boolean agentCanMoveTo (int newX, int newY) {
-        if (newX == agentX && newY == agentY)
-            return false;
-        if (newX < 0 || newY < 0 || newX >= size || newY >= size)
-            return false;
-        return true;
+    public boolean isLegal (int newX, int newY) {
+        return (newX >= 0 && newY >= 0 && newX < size && newY < size);
     }
 
     /*
@@ -31,7 +22,7 @@ public class Board {
      *  Move agent to new position regardless of the if statement (update agentX and agentY)
      */
     public boolean moveAgent(int newX, int newY){
-        if (agentCanMoveTo(newX, newY)) {
+        if (isLegal(newX, newY)) {
             if (state[newX][newY] != 0) {
                 state[agentX][agentY] = state[newX][newY];
             }
