@@ -1,3 +1,4 @@
+// This class is a representation of a physical configuration and should be encapsulated by appropriate nodes.
 public class Board {
     private int[][] state;
     private int size;
@@ -5,7 +6,7 @@ public class Board {
     private int agentY;
 
     public Board (int[][] oldState, int x, int y, int newX, int newY) {
-        state = oldState.clone();   // test this
+        state = oldState.clone();
         size = state.length;
         agentX = x;
         agentY = y;
@@ -13,15 +14,21 @@ public class Board {
         moveAgent(newX,newY);
     }
 
+    /*
+     * New position is only accepted if it's adjacent to current position and
+     * within borders of the puzzle board.
+     */
     public boolean isLegal (int newX, int newY) {
         int positionDifference = Math.abs(newX - agentX) + Math.abs(newY - agentY);
 
         if (positionDifference != 1) {     // new position not adjacent to current
             return false;
         }
+
         if (newX < 0 || newY < 0 || newX > size || newY > size) {  // position ouf of borders
             return false;
         }
+
         return true;
     }
 
@@ -45,13 +52,13 @@ public class Board {
 
     /*
      *  I considered that the goal state is the ordered letter blocks stacked on top of each other
-     *  at the bottom of the board, no matter the column.
-     *  So first row should be empty.
+     *  at the bottom of the board, no matter in which column.
+     *  There should be size-1 letter blocks, so the first row is expected to be empty.
      */
     public boolean isGoalState(){
         int col = -1;
 
-        // Find the column of the tower
+        // Find the column of the tower by looking at the second row
         for (int j = 0; j < size; j ++) {
             if (state[1][j] != 0) {
                 col = j;
@@ -61,7 +68,9 @@ public class Board {
         if (col == -1) return false;    // Didn't find a block on the second row
 
         for (int i = 1; i < size; i++) {
-            if (state[i][col] != 'A' + i) return false;   // Incorrect block found
+            int expectedLetter = 'A' + i - 1;
+
+            if (state[i][col] != expectedLetter) return false;   // Incorrect block found
         }
 
         return true;
