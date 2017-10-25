@@ -5,19 +5,31 @@ public class Board {
     private int agentX;
     private int agentY;
 
-    public Board (int[][] oldState, int x, int y, int newX, int newY) {
-        state = oldState.clone();
+    public Board(int[][] state, int agentX, int agentY, int newX, int newY) {
+        this.state = state;
         size = state.length;
-        agentX = x;
-        agentY = y;
+        this.agentX = agentX;
+        this.agentY = agentY;
 
-        moveAgent(newX,newY);
+        if (isLegal(newX, newY)) moveAgent(newX, newY);
+    }
+
+    public int getAgentX() {
+        return agentX;
+    }
+
+    public int getAgentY() {
+        return agentY;
+    }
+
+    public int[][] getState() {
+        return state;
     }
 
     /*
-     * New position is only accepted if it's adjacent to current position and
-     * within borders of the puzzle board.
-     */
+         * New position is only accepted if it's adjacent to current position and
+         * within borders of the puzzle board.
+         */
     public boolean isLegal (int newX, int newY) {
         int positionDifference = Math.abs(newX - agentX) + Math.abs(newY - agentY);
 
@@ -32,8 +44,7 @@ public class Board {
         return true;
     }
 
-    /*
-     *  If new position contains a letter block, move it to the current position of the agent.
+    /*  If new position contains a letter block, move it to the current position of the agent.
      *  Move agent to new position regardless of the if statement (update agentX and agentY)
      */
     public boolean moveAgent(int newX, int newY){
@@ -69,7 +80,6 @@ public class Board {
 
         for (int i = 1; i < size; i++) {
             int expectedLetter = 'A' + i - 1;
-
             if (state[i][col] != expectedLetter) return false;   // Incorrect block found
         }
 
