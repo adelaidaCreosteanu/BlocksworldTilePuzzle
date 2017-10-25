@@ -1,8 +1,16 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class BFSearch {
-    LinkedList<BFNode> queue;
+    LinkedList<BFNode> fringe;
+
+    public BFSearch(int[][] state) {
+        fringe = new LinkedList<>();
+
+        Board initial = new Board(state, state.length - 1, state.length - 1);
+        fringe.add(new BFNode(null, 0, initial));
+    }
 
     private class BFNode extends Node {
         public BFNode(BFNode parent, int depth, Board boardState) {
@@ -14,9 +22,10 @@ public class BFSearch {
             int x = boardState.getAgentX();
             int y = boardState.getAgentY();
 
-            for (Position newP : randomiseOrder(x, y)) {
+            for (Position newP : getRandomisedPositions(x, y)) {
                 if (boardState.isLegal(newP.x, newP.y)) {
-                    Board b = new Board(boardState.getState(), x, y, newP.x, newP.y);
+                    Board b = new Board(boardState.getState(), x, y);
+                    b.moveAgent(newP.x, newP.y);
                     list.add(new BFNode(this, depth + 1, b));
                 }
             }
@@ -25,48 +34,19 @@ public class BFSearch {
         }
 
         /*
-         * I'm using a quasi-random way to create the order of node expansion.
-         * It's random enough for breadth-first not to get stuck in a loop.
+         * Puts the four neighbours of the coordinates received as arguments in a list and returns
+         * the shuffled list. The returned list can contain illegal positions (outside the board)
+         * but this is dealt with in the Board class
          */
-        private ArrayList<Position> randomiseOrder(int x, int y) {
+        private ArrayList<Position> getRandomisedPositions(int x, int y) {
             ArrayList<Position> p = new ArrayList<>(4);
-            double r = Math.random();
 
-            if (r < 0.5) {
-                r = Math.random();
-                if (r < 0.5) {
-                    p.add(new Position(x + 1, y));
-                    p.add(new Position(x - 1, y));
-                } else {
-                    p.add(new Position(x - 1, y));
-                    p.add(new Position(x + 1, y));
-                }
-                r = Math.random();
-                if (r < 0.5) {
-                    p.add(new Position(x, y + 1));
-                    p.add(new Position(x, y - 1));
-                } else {
-                    p.add(new Position(x, y - 1));
-                    p.add(new Position(x, y + 1));
-                }
-            } else {
-                r = Math.random();
-                if (r < 0.5) {
-                    p.add(new Position(x, y + 1));
-                    p.add(new Position(x, y - 1));
-                } else {
-                    p.add(new Position(x, y - 1));
-                    p.add(new Position(x, y + 1));
-                }
-                r = Math.random();
-                if (r < 0.5) {
-                    p.add(new Position(x + 1, y));
-                    p.add(new Position(x - 1, y));
-                } else {
-                    p.add(new Position(x - 1, y));
-                    p.add(new Position(x + 1, y));
-                }
-            }
+            p.add(new Position(x - 1, y));
+            p.add(new Position(x, y + 1));
+            p.add(new Position(x + 1, y));
+            p.add(new Position(x, y - 1));
+
+            Collections.shuffle(p);
 
             return p;
         }

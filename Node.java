@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public abstract class Node {
     protected Node parent;
-    protected int depth;
+    protected int depth;        // Do I really need depth?
     protected Board boardState;
     protected int cost;       // Not sure about this
 

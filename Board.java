@@ -5,13 +5,11 @@ public class Board {
     private int agentX;
     private int agentY;
 
-    public Board(int[][] state, int agentX, int agentY, int newX, int newY) {
+    public Board(int[][] state, int agentX, int agentY) {
         this.state = state;
         size = state.length;
         this.agentX = agentX;
         this.agentY = agentY;
-
-        if (isLegal(newX, newY)) moveAgent(newX, newY);
     }
 
     public int getAgentX() {
