@@ -1,15 +1,41 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 
 public class BFSearch {
-    LinkedList<BFNode> fringe;
+    private ArrayList<Node> fringe;
+    private int nodesExpanded;
 
-    public BFSearch(int[][] state) {
-        fringe = new LinkedList<>();
+    public BFSearch(Board initial) {
+        fringe = new ArrayList<>();
 
-        Board initial = new Board(state, state.length - 1, state.length - 1);
         fringe.add(new BFNode(null, 0, initial));
+        expand();
+    }
+
+    private void expand() {
+        nodesExpanded++;
+        Node expandedNode = fringe.remove(0);
+
+        if (expandedNode.depth < 4) {
+            if (expandedNode.boardState.isGoalState()) {
+                System.out.println("=====   BREADTH FIRST STATS   =====");
+                System.out.println("Nodes expanded: " + nodesExpanded);
+                System.out.println("Depth reached: " + expandedNode.depth);
+                System.out.println("Solution found:");
+                expandedNode.boardState.printState();
+            } else {
+                for (Node n : expandedNode.getSuccessors()) {
+                    fringe.add(n);
+                    expandedNode.boardState.printState();
+                    System.out.println("  ||  ");
+                    System.out.println("  \\/  ");
+                    n.boardState.printState();
+                    System.out.println("--------");
+                }
+
+                expand();
+            }
+        }
     }
 
     private class BFNode extends Node {

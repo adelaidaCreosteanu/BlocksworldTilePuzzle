@@ -35,7 +35,7 @@ public class Board {
             return false;
         }
 
-        if (newX < 0 || newY < 0 || newX > size || newY > size) {  // position ouf of borders
+        if (newX < 0 || newY < 0 || newX > size - 1 || newY > size - 1) {  // position ouf of borders
             return false;
         }
 
@@ -49,6 +49,7 @@ public class Board {
         if (isLegal(newX, newY)) {
             if (state[newX][newY] != 0) {
                 state[agentX][agentY] = state[newX][newY];
+                state[newX][newY] = 0;
             }
 
             agentX = newX;
