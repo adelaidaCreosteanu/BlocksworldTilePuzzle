@@ -34,7 +34,7 @@ public class BFSearch {
     }
 
     private class BFNode extends Node {
-        public BFNode(BFNode parent, int depth, Board boardState) {
+        private BFNode(BFNode parent, int depth, Board boardState) {
             super(parent, depth, boardState);
         }
 
@@ -52,24 +52,6 @@ public class BFSearch {
             }
 
             return list;
-        }
-
-        /*
-         * Puts the four neighbours of the coordinates received as arguments in a list and returns
-         * the shuffled list. The returned list can contain illegal positions (outside the board)
-         * but this is dealt with in the Board class
-         */
-        private ArrayList<Position> getRandomisedPositions(int x, int y) {
-            ArrayList<Position> p = new ArrayList<>(4);
-
-            p.add(new Position(x - 1, y));
-            p.add(new Position(x, y + 1));
-            p.add(new Position(x + 1, y));
-            p.add(new Position(x, y - 1));
-
-            Collections.shuffle(p);
-
-            return p;
         }
     }
 }
