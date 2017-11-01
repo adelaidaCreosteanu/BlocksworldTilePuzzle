@@ -6,10 +6,31 @@ public class BFSearch {
     LinkedList<BFNode> fringe;
 
     public BFSearch(int[][] state) {
-        fringe = new LinkedList<>();
-
         Board initial = new Board(state, state.length - 1, state.length - 1);
-        fringe.add(new BFNode(null, 0, initial));
+        go(new BFNode(null, 0, initial));
+    }
+
+    private void go(BFNode root) {
+        fringe = new LinkedList<>();
+        fringe.add(root);
+        boolean end = false;
+        int nodesExpanded = 0;
+
+        while (!fringe.isEmpty() && !end) {
+            BFNode current = fringe.remove();
+            nodesExpanded ++;
+            Board b = current.boardState;
+
+            if (b.isGoalState()) {
+                System.out.println("Solution found at depth: " + current.depth + "\nNumber of nodes expanded: " + nodesExpanded);
+                b.printState();
+                end = true;
+            } else {
+                for (Node n : current.getSuccessors()) {
+                    fringe.add((BFNode) n);
+                }
+            }
+        }
     }
 
     private class BFNode extends Node {
@@ -25,7 +46,7 @@ public class BFSearch {
             for (Position newP : getRandomisedPositions(x, y)) {
                 if (boardState.isLegal(newP.x, newP.y)) {
                     Board b = new Board(boardState.getState(), x, y);
-                    b.moveAgent(newP.x, newP.y);
+                    b.moveAgent(newP.x, newP.y);               //update the state
                     list.add(new BFNode(this, depth + 1, b));
                 }
             }

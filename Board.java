@@ -24,10 +24,9 @@ public class Board {
         return state;
     }
 
-    /*
-         * New position is only accepted if it's adjacent to current position and
-         * within borders of the puzzle board.
-         */
+    /* New position is only accepted if it's adjacent to current position and
+     * within borders of the puzzle board.
+     */
     public boolean isLegal (int newX, int newY) {
         int positionDifference = Math.abs(newX - agentX) + Math.abs(newY - agentY);
 
@@ -35,24 +34,27 @@ public class Board {
             return false;
         }
 
-        if (newX < 0 || newY < 0 || newX > size || newY > size) {  // position ouf of borders
+        if (newX < 0 || newY < 0 || newX > size - 1 || newY > size - 1) {  // position ouf of borders
             return false;
         }
 
         return true;
     }
 
-    /*  If new position contains a letter block, move it to the current position of the agent.
-     *  Move agent to new position regardless of the if statement (update agentX and agentY)
+    /*  If move is legal, swap values of current agent position and new position where agent
+     *  will move to. Then update agent position.
      */
     public boolean moveAgent(int newX, int newY){
         if (isLegal(newX, newY)) {
-            if (state[newX][newY] != 0) {
-                state[agentX][agentY] = state[newX][newY];
-            }
+            // Swap values
+            int aux = state[newX][newY];
+            state[newX][newY] = state[agentX][agentY];
+            state[agentX][agentY] = aux;
 
+            // Update agent position
             agentX = newX;
             agentY = newY;
+
             return true;
         }
 
