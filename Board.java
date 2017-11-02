@@ -27,26 +27,22 @@ public class Board {
     /* New position is only accepted if it's adjacent to current position and
      * within borders of the puzzle board.
      */
-    public boolean isLegal (int newX, int newY) {
-        int positionDifference = Math.abs(newX - agentX) + Math.abs(newY - agentY);
-
-        if (positionDifference != 1) {     // new position not adjacent to current
+    public boolean isLegal (int x, int y) {
+        if (x < 0 || y < 0 || x >= size || y >= size) {     // position out of borders
             return false;
         }
-
-        if (newX < 0 || newY < 0 || newX > size - 1 || newY > size - 1) {  // position ouf of borders
+        if (Math.abs(agentX-x) + Math.abs(agentY-y) != 1) { // new position is not adjacent to agent
             return false;
         }
-
         return true;
     }
 
     /*  If move is legal, swap values of current agent position and new position where agent
      *  will move to. Then update agent position.
      */
-    public boolean moveAgent(int newX, int newY){
+    public void moveAgent(int newX, int newY){
         if (isLegal(newX, newY)) {
-            // Swap values
+            // Swap values in the matrix
             int aux = state[newX][newY];
             state[newX][newY] = state[agentX][agentY];
             state[agentX][agentY] = aux;
@@ -54,11 +50,7 @@ public class Board {
             // Update agent position
             agentX = newX;
             agentY = newY;
-
-            return true;
         }
-
-        return false;
     }
 
     /*
@@ -71,15 +63,15 @@ public class Board {
 
         // Find the column of the tower by looking at the second row
         for (int j = 0; j < size; j ++) {
-            if (state[1][j] != 0) {
+            if (state[1][j] == 'A') {
                 col = j;
                 break;
             }
         }
         if (col == -1) return false;    // Didn't find a block on the second row
 
-        for (int i = 1; i < size; i++) {
-            int expectedLetter = 'A' + i - 1;
+        for (int i = 2; i < size; i++) {    // Start from third row since first row is empty and second was already
+            int expectedLetter = 'A' + i - 1;           // checked for 'A'
             if (state[i][col] != expectedLetter) return false;   // Incorrect block found
         }
 

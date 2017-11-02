@@ -20,11 +20,12 @@ public class DFSearch {
             Board b = current.boardState;
 
             if (b.isGoalState()) {
-                System.out.println("~~~~~\nDFS found a solution at depth: " + current.depth + "\nNumber of nodes expanded: " + nodesExpanded);
+                System.out.println("~~~~~\nDFS found a solution at depth: " + current.depth);
+                System.out.println("Number of nodes expanded: " + nodesExpanded);
                 b.printState();
                 end = true;
             } else {
-                for (Node node : current.getSuccessors()) {
+                for (Node node : current.getSuccessors(false)) { // Get successors in the same order
                     fringe.push(node);
                 }
             }

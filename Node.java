@@ -13,12 +13,12 @@ public class Node {
         this.boardState = state;
     }
 
-    public ArrayList<Node> getSuccessors() {
+    public ArrayList<Node> getSuccessors(boolean randomise) {
         ArrayList<Node> list = new ArrayList<>(4);
         int x = boardState.getAgentX();
         int y = boardState.getAgentY();
 
-        for (Position newP : getRandomisedPositions(x, y)) {
+        for (Position newP : getPositions(x, y, randomise)) {
             if (boardState.isLegal(newP.x, newP.y)) {
                 Board b = new Board(boardState.getState(), x, y);
                 b.moveAgent(newP.x, newP.y);               //update the state
@@ -34,7 +34,7 @@ public class Node {
          * the shuffled list. The returned list can contain illegal positions (outside the board)
          * but this is dealt with in the Board class
          */
-    protected ArrayList<Position> getRandomisedPositions(int x, int y) {
+    protected ArrayList<Position> getPositions(int x, int y, boolean randomise) {
         ArrayList<Position> p = new ArrayList<>(4);
 
         p.add(new Position(x - 1, y));
@@ -42,7 +42,9 @@ public class Node {
         p.add(new Position(x + 1, y));
         p.add(new Position(x, y - 1));
 
-        Collections.shuffle(p);
+        if (randomise) {
+            Collections.shuffle(p);
+        }
 
         return p;
     }
