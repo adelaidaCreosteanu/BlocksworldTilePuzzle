@@ -18,6 +18,7 @@ public class Node {
         int x = boardState.getAgentX();
         int y = boardState.getAgentY();
 
+
         for (Position newP : getPositions(x, y, randomise)) {
             if (boardState.isLegal(newP.x, newP.y)) {
                 Board b = new Board(boardState.getState(), x, y);

@@ -6,12 +6,11 @@ public class DFSearch {
 
     public DFSearch(int[][] state) {
         Board initial = new Board(state, state.length - 1, state.length - 1);
-        go(new Node(null, 0, initial));
+        fringe = new Stack<>();
+        fringe.push(new Node(null, 0, initial));
     }
 
-    private void go(Node root) {
-        fringe = new Stack<>();
-        fringe.push(root);
+    public int go() {
         boolean end = false;
         int nodesExpanded = 0;
 
@@ -26,11 +25,11 @@ public class DFSearch {
                 b.printState();
                 end = true;
             } else {
-                for (Node node : current.getSuccessors(false)) { // Get successors in the same order
+                for (Node node : current.getSuccessors(true)) {
                     fringe.push(node);
                 }
             }
         }
-
+        return nodesExpanded;
     }
 }

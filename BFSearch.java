@@ -6,12 +6,11 @@ public class BFSearch {
 
     public BFSearch(int[][] state) {
         Board initial = new Board(state, state.length - 1, state.length - 1);
-        go(new Node(null, 0, initial));
+        fringe = new LinkedList<>();
+        fringe.add(new Node(null, 0, initial));
     }
 
-    private void go(Node root) {
-        fringe = new LinkedList<>();
-        fringe.add(root);
+    public int go() {
         boolean end = false;
         int nodesExpanded = 0;
 
@@ -21,15 +20,16 @@ public class BFSearch {
             Board b = current.boardState;
 
             if (b.isGoalState()) {
-                System.out.println("~~~\nBFS found a solution at depth: " + current.depth);
+                System.out.println("~~~~~\nBFS found a solution at depth: " + current.depth);
                 System.out.println("Number of nodes expanded: " + nodesExpanded);
                 b.printState();
                 end = true;
             } else {
-                for (Node node : current.getSuccessors(true)) {    // Get successors in a random order
+                for (Node node : current.getSuccessors(false)) {
                     fringe.add(node);
                 }
             }
         }
+        return nodesExpanded;
     }
 }

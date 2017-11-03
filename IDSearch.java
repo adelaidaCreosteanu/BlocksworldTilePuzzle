@@ -8,18 +8,18 @@ public class IDSearch {
 
     public IDSearch(int[][] state) {
         Board initial = new Board(state, state.length - 1, state.length - 1);
-        go(new Node(null, 0, initial));
+        fringe = new Stack<>();
+        fringe.push(new Node(null, 0, initial));
     }
 
-    private void go(Node root) {
-        fringe = new Stack<>();
-        fringe.push(root);
+    public int go() {
         end = false;
         nodesExpanded = 0;
 
         for(int maxDepth = 0; !end; maxDepth ++) {
             depthLimitedSearch(maxDepth);
         }
+        return nodesExpanded;
     }
 
     private void depthLimitedSearch(int maxDepth) {
@@ -40,7 +40,7 @@ public class IDSearch {
             }
 
             if (current.depth == maxDepth) {
-                return; // maybe break would be better?
+                break;
             }
         }
     }

@@ -20,8 +20,19 @@ public class Board {
         return agentY;
     }
 
+    /*
+     * Returns a copy of the board state.
+     */
     public int[][] getState() {
-        return state;
+        int[][] copy = new int[size][size];
+
+        for (int i = 0; i < size; i ++) {
+            for (int j = 0; j < size; j ++) {
+                copy[i][j] = state[i][j];
+            }
+        }
+
+        return copy;
     }
 
     /* New position is only accepted if it's adjacent to current position and
