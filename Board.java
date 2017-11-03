@@ -66,24 +66,17 @@ public class Board {
 
     /*
      *  I considered that the goal state is the ordered letter blocks stacked on top of each other
-     *  at the bottom of the board, no matter in which column.
-     *  There should be size-1 letter blocks, so the first row is expected to be empty.
+     *  at the bottom of the board, in the middle column (odd size) or to the left of the middle
+     *  (even size). First row is expected to be empty.
      */
     public boolean isGoalState(){
-        int col = -1;
+        int col = (size - 1)/2;
 
-        // Find the column of the tower by looking at the second row
-        for (int j = 0; j < size; j ++) {
-            if (state[1][j] == 'A') {
-                col = j;
-                break;
+        for (int i = 1; i < size; i++) {    // Start from second row
+            int expected = 'A' + i - 1;
+            if (state[i][col] != expected) {
+                return false;               // Incorrect block found
             }
-        }
-        if (col == -1) return false;    // Didn't find a block on the second row
-
-        for (int i = 2; i < size; i++) {    // Start from third row since first row is empty and second was already
-            int expectedLetter = 'A' + i - 1;           // checked for 'A'
-            if (state[i][col] != expectedLetter) return false;   // Incorrect block found
         }
 
         return true;
