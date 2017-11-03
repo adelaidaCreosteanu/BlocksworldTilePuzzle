@@ -7,5 +7,8 @@ public class Solver {
 
         boardState = new int[][]{{0, 0, 0}, {0, 0, 'A'}, {0, 'B', 0}};
         new DFSearch(boardState);
+
+        boardState = new int[][]{{0, 0, 0}, {0, 0, 'A'}, {0, 'B', 0}};
+        new IDSearch(boardState);
     }
 }

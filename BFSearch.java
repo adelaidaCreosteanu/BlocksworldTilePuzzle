@@ -1,7 +1,8 @@
 import java.util.LinkedList;
 
+// This class implements Breadth-first tree search
 public class BFSearch {
-    LinkedList<Node> fringe;
+    private LinkedList<Node> fringe;
 
     public BFSearch(int[][] state) {
         Board initial = new Board(state, state.length - 1, state.length - 1);

@@ -1,7 +1,8 @@
 import java.util.Stack;
 
+// This class implements Depth-first tree search
 public class DFSearch {
-    Stack<Node> fringe;
+    private Stack<Node> fringe;
 
     public DFSearch(int[][] state) {
         Board initial = new Board(state, state.length - 1, state.length - 1);
