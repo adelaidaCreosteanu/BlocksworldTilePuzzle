@@ -11,10 +11,9 @@ public class DFSearch {
     }
 
     public int go() {
-        boolean end = false;
         int nodesExpanded = 0;
 
-        while (!fringe.empty() && !end) {
+        while (true) {
             Node current = fringe.pop();
             nodesExpanded ++;
             Board b = current.boardState;
@@ -23,13 +22,12 @@ public class DFSearch {
                 System.out.println("~~~~~\nDFS found a solution at depth: " + current.depth);
                 System.out.println("Number of nodes expanded: " + nodesExpanded);
                 b.printState();
-                end = true;
+                return nodesExpanded;
             } else {
                 for (Node node : current.getSuccessors(true)) {
                     fringe.push(node);
                 }
             }
         }
-        return nodesExpanded;
     }
 }

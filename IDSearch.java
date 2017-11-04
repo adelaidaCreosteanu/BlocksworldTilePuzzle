@@ -23,8 +23,9 @@ public class IDSearch {
     }
 
     private void depthLimitedSearch(int maxDepth) {
-        while (!fringe.empty()) {
-            Node current = fringe.pop();
+        Node current = fringe.pop();
+
+        while (current.depth <= maxDepth) {
             nodesExpanded ++;
             Board b = current.boardState;
 
@@ -39,9 +40,7 @@ public class IDSearch {
                 }
             }
 
-            if (current.depth == maxDepth) {
-                break;
-            }
+            current = fringe.pop();
         }
     }
 }

@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+
 // Used by A* search
 public class HeuristicNode extends Node implements Comparable<HeuristicNode> {
     private int cost;
+    private int heuristic;
 
     public HeuristicNode(Node parent, int depth, Board state, int parentCost, int heuristic) {
         super(parent, depth, state);
+        this.heuristic = heuristic;
 
         if (heuristic == 0) {
             cost = parentCost + noMisplacedBlocks();
@@ -45,6 +49,22 @@ public class HeuristicNode extends Node implements Comparable<HeuristicNode> {
         }
 
         return n;
+    }
+
+    public ArrayList<HeuristicNode> getSuccessors() {
+        ArrayList<HeuristicNode> list = new ArrayList<>(4);
+        int x = boardState.getAgentX();
+        int y = boardState.getAgentY();
+
+        for (Position newP : getPositions(x, y, false)) {
+            if (boardState.isLegal(newP.x, newP.y)) {
+                Board b = new Board(boardState.cloneState(), x, y);
+                b.moveAgent(newP.x, newP.y);
+                list.add(new HeuristicNode(this, depth+1, b, this.cost, this.heuristic));
+            }
+        }
+
+        return list;
     }
 
     public int compareTo(HeuristicNode that) {
