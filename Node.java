@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
+// Used by blind search
 public class Node {
     protected Node parent;
-    protected int depth;        // Do I really need depth?
+    protected int depth;
     protected Board boardState;
-    protected int cost;       // Not sure about this
 
     public Node(Node parent, int depth, Board state) {
         this.parent = parent;
@@ -21,7 +21,7 @@ public class Node {
 
         for (Position newP : getPositions(x, y, randomise)) {
             if (boardState.isLegal(newP.x, newP.y)) {
-                Board b = new Board(boardState.getState(), x, y);
+                Board b = new Board(boardState.cloneState(), x, y);
                 b.moveAgent(newP.x, newP.y);               //update the state
                 list.add(new Node(this, depth + 1, b));
             }

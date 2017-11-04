@@ -20,10 +20,14 @@ public class Board {
         return agentY;
     }
 
+    public int[][] getState() {
+        return state;
+    }
+
     /*
      * Returns a copy of the board state.
      */
-    public int[][] getState() {
+    public int[][] cloneState() {
         int[][] copy = new int[size][size];
 
         for (int i = 0; i < size; i ++) {
