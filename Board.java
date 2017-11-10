@@ -25,61 +25,62 @@ public class Board {
     }
 
     /*
-         * New position is only accepted if it's adjacent to current position and
-         * within borders of the puzzle board.
-         */
-    public boolean isLegal (int newX, int newY) {
-        int positionDifference = Math.abs(newX - agentX) + Math.abs(newY - agentY);
+     * Returns a copy of the board state.
+     */
+    public int[][] cloneState() {
+        int[][] copy = new int[size][size];
 
-        if (positionDifference != 1) {     // new position not adjacent to current
-            return false;
+        for (int i = 0; i < size; i ++) {
+            for (int j = 0; j < size; j ++) {
+                copy[i][j] = state[i][j];
+            }
         }
 
-        if (newX < 0 || newY < 0 || newX > size - 1 || newY > size - 1) {  // position ouf of borders
+        return copy;
+    }
+
+    /* New position is only accepted if it's adjacent to current position and
+     * within borders of the puzzle board.
+     */
+    public boolean isLegal (int x, int y) {
+        if (x < 0 || y < 0 || x >= size || y >= size) {     // position out of borders
             return false;
         }
-
+        if (Math.abs(agentX-x) + Math.abs(agentY-y) != 1) { // new position is not adjacent to agent
+            return false;
+        }
         return true;
     }
 
-    /*  If new position contains a letter block, move it to the current position of the agent.
-     *  Move agent to new position regardless of the if statement (update agentX and agentY)
+    /*  If move is legal, swap values of current agent position and new position where agent
+     *  will move to. Then update agent position.
      */
-    public boolean moveAgent(int newX, int newY){
+    public void moveAgent(int newX, int newY){
         if (isLegal(newX, newY)) {
-            if (state[newX][newY] != 0) {
-                state[agentX][agentY] = state[newX][newY];
-                state[newX][newY] = 0;
-            }
+            // Swap values in the matrix
+            int aux = state[newX][newY];
+            state[newX][newY] = state[agentX][agentY];
+            state[agentX][agentY] = aux;
 
+            // Update agent position
             agentX = newX;
             agentY = newY;
-            return true;
         }
-
-        return false;
     }
 
     /*
      *  I considered that the goal state is the ordered letter blocks stacked on top of each other
-     *  at the bottom of the board, no matter in which column.
-     *  There should be size-1 letter blocks, so the first row is expected to be empty.
+     *  at the bottom of the board, in the middle column (odd size) or to the left of the middle
+     *  (even size). First row is expected to be empty.
      */
     public boolean isGoalState(){
-        int col = -1;
+        int col = (size - 1)/2;
 
-        // Find the column of the tower by looking at the second row
-        for (int j = 0; j < size; j ++) {
-            if (state[1][j] != 0) {
-                col = j;
-                break;
+        for (int i = 1; i < size; i++) {    // Start from second row
+            int expected = 'A' + i - 1;
+            if (state[i][col] != expected) {
+                return false;               // Incorrect block found
             }
-        }
-        if (col == -1) return false;    // Didn't find a block on the second row
-
-        for (int i = 1; i < size; i++) {
-            int expectedLetter = 'A' + i - 1;
-            if (state[i][col] != expectedLetter) return false;   // Incorrect block found
         }
 
         return true;

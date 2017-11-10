@@ -1,8 +1,22 @@
+// I considered that the agent always start at the bottom right, even though the start states will differ
+// to make the problem harder/easier
 public class Solver {
     public static void main(String[] args) {
-        int[][] boardState = new int[][]{{0, 0, 0}, {0, 'A', 0}, {'B', 0, 0}};
-        Board board = new Board(boardState, 1, 0);
+        int[][] boardState = new int[][]{{0, 0, 0}, {0, 0, 0}, {'A', 'B', 0}};
+        new BFSearch(boardState).go();
 
-        new BFSearch(board);
+        boardState = new int[][]{{0, 0, 0}, {0, 0, 0}, {'A', 'B', 0}};
+        new DFSearch(boardState).go();
+
+        boardState = new int[][]{{0, 0, 0}, {0, 0, 0}, {'A', 'B', 0}};
+        new IDSearch(boardState).go();
+
+        boardState = new int[][]{{0, 0, 0}, {0, 0, 0}, {'A', 'B', 0}};
+        new ASearch(boardState).go();   // no misplaced tiles
+
+        boardState = new int[][]{{0, 0, 0}, {0, 0, 0}, {'A', 'B', 0}};
+        ASearch manhattan = new ASearch(boardState);
+        manhattan.setHeuristic(1);
+        manhattan.go();
     }
 }
