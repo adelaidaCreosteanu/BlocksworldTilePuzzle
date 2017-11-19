@@ -74,7 +74,7 @@ public class Board {
      *  (even size). First row is expected to be empty.
      */
     public boolean isGoalState(){
-        int col = (size - 1)/2;
+        int col = size / 2;
 
         for (int i = 1; i < size; i++) {    // Start from second row
             int expected = 'A' + i - 1;

@@ -35,9 +35,7 @@ public class IDSearch {
                 b.printState();
                 end = true;
             } else {
-                for (Node node : current.getSuccessors(true)) {
-                    fringe.push(node);
-                }
+                fringe.addAll(current.getSuccessors(true));
             }
 
             current = fringe.pop();

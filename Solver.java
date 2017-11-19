@@ -12,11 +12,9 @@ public class Solver {
         new IDSearch(boardState).go();
 
         boardState = new int[][]{{0, 0, 0}, {0, 0, 0}, {'A', 'B', 0}};
-        new ASearch(boardState).go();   // no misplaced tiles
+        new ASearchMisplaced(boardState).go();   // no misplaced tiles
 
         boardState = new int[][]{{0, 0, 0}, {0, 0, 0}, {'A', 'B', 0}};
-        ASearch manhattan = new ASearch(boardState);
-        manhattan.setHeuristic(1);
-        manhattan.go();
+        new ASearchManhattan(boardState).go();
     }
 }

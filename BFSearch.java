@@ -24,9 +24,7 @@ public class BFSearch {
                 b.printState();
                 return nodesExpanded;
             } else {
-                for (Node node : current.getSuccessors(false)) {
-                    fringe.add(node);
-                }
+                fringe.addAll(current.getSuccessors(false));
             }
         }
     }
