@@ -19,9 +19,9 @@ public class BFSearch {
             Board b = current.boardState;
 
             if (b.isGoalState()) {
-                System.out.println("~~~~~\nBFS found a solution at depth: " + current.depth);
-                System.out.println("Number of nodes expanded: " + nodesExpanded);
-                b.printState();
+//                System.out.println("~~~~~\nBFS found a solution at depth: " + current.depth);
+//                System.out.println("Number of nodes expanded: " + nodesExpanded);
+//                b.printState();
                 return nodesExpanded;
             } else {
                 fringe.addAll(current.getSuccessors(false));

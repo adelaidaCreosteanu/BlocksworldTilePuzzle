@@ -30,10 +30,11 @@ public class IDSearch {
             Board b = current.boardState;
 
             if (b.isGoalState()) {
-                System.out.println("~~~~~\nIDS found a solution at depth: " + current.depth);
-                System.out.println("Number of nodes expanded: " + nodesExpanded);
-                b.printState();
+//                System.out.println("~~~~~\nIDS found a solution at depth: " + current.depth);
+//                System.out.println("Number of nodes expanded: " + nodesExpanded);
+//                b.printState();
                 end = true;
+                break;
             } else {
                 fringe.addAll(current.getSuccessors(true));
             }
