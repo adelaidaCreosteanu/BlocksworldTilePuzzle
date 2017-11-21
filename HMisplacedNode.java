@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-// Used by A* search
 public class HMisplacedNode extends Node implements Comparable<HMisplacedNode> {
     private int cost;
 
@@ -16,18 +15,18 @@ public class HMisplacedNode extends Node implements Comparable<HMisplacedNode> {
 
     // Counts how many blocks are not in their goal place
     private int misplacedTiles() {
-        int n = 0;
+        int displaced = 0;
         int[][] state = boardState.getState();
         int col = state.length / 2;     // expected goal column
 
         for (int i = 1; i < state.length; i++) {
             int expected = 'A' + i - 1;
             if (state[i][col] != expected) {
-                n ++;
+                displaced++;
             }
         }
 
-        return n;
+        return displaced;
     }
 
     public ArrayList<HMisplacedNode> getSuccessors() {
