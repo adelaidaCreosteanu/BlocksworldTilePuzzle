@@ -33,12 +33,12 @@ public class HManhattanNode extends Node implements Comparable<HManhattanNode> {
 
     public ArrayList<HManhattanNode> getSuccessors() {
         ArrayList<HManhattanNode> list = new ArrayList<>(4);
-        int x = boardState.getAgentX();
-        int y = boardState.getAgentY();
+        Position curr = new Position(boardState.getAgentX(), boardState.getAgentY());
 
-        for (Position newP : getPositions(x, y, false)) {
+        for (Position newP : curr.getAdjacent(false)) {
             if (boardState.isLegal(newP.x, newP.y)) {
-                Board b = new Board(boardState.cloneState(), x, y);
+                Board b = boardState.cloneBoard();
+                // Update agent position:
                 b.moveAgent(newP.x, newP.y);
                 list.add(new HManhattanNode(this, depth + 1, b));
             }

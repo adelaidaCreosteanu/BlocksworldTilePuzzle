@@ -1,6 +1,5 @@
 import java.util.PriorityQueue;
 
-// This class implements A* tree search
 public class ASearchMisplaced {
     private PriorityQueue<HMisplacedNode> fringe;
 

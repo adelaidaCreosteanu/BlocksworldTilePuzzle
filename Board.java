@@ -24,10 +24,7 @@ public class Board {
         return state;
     }
 
-    /*
-     * Returns a copy of the board state.
-     */
-    public int[][] cloneState() {
+    public Board cloneBoard() {
         int[][] copy = new int[size][size];
 
         for (int i = 0; i < size; i ++) {
@@ -36,7 +33,7 @@ public class Board {
             }
         }
 
-        return copy;
+        return new Board(copy, agentX, agentY);
     }
 
     /* New position is only accepted if it's adjacent to current position and
