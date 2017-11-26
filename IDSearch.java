@@ -15,31 +15,34 @@ public class IDSearch {
     public int go() {
         end = false;
         nodesExpanded = 0;
+        Node current = null;
 
-        for(int maxDepth = 0; !end; maxDepth ++) {
-            depthLimitedSearch(maxDepth);
+        for (int maxDepth = 0; !end; maxDepth++) {
+            current = depthLimitedSearch(maxDepth);
         }
+
+        // Print path to goal
+        System.out.println("~~~~\nIDSearch expanded: " + nodesExpanded + " nodes");
+//        current.printPath();
         return nodesExpanded;
     }
 
-    private void depthLimitedSearch(int maxDepth) {
+    private Node depthLimitedSearch(int maxDepth) {
         Node current = fringe.pop();
 
         while (current.depth <= maxDepth) {
-            nodesExpanded ++;
+            nodesExpanded++;
             Board b = current.boardState;
 
             if (b.isGoalState()) {
-//                System.out.println("~~~~~\nIDS found a solution at depth: " + current.depth);
-//                System.out.println("Number of nodes expanded: " + nodesExpanded);
-//                b.printState();
                 end = true;
-                break;
+                return current;
             } else {
                 fringe.addAll(current.getSuccessors(true));
             }
 
             current = fringe.pop();
         }
+        return null;
     }
 }

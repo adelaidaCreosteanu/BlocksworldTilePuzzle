@@ -10,19 +10,16 @@ public class Position {
         this.y = y;
     }
 
-    //TODO: update comment
-    /*
-     * Puts the four neighbours of the coordinates received as arguments in a list and returns
-     * the shuffled list. The returned list can contain illegal positions (outside the board)
-     * but this is dealt with in the Board class
+    /* Can contain illegal position (out of board bounds) but this is handled
+     * in the Board class in the isLegal(x,y) method.
      */
     public ArrayList<Position> getAdjacent(boolean randomise) {
         ArrayList<Position> p = new ArrayList<>(4);
 
         p.add(new Position(x - 1, y));
-        p.add(new Position(x, y + 1));
         p.add(new Position(x + 1, y));
         p.add(new Position(x, y - 1));
+        p.add(new Position(x, y + 1));
 
         if (randomise) {
             Collections.shuffle(p);

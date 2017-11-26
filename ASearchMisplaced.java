@@ -14,7 +14,7 @@ public class ASearchMisplaced {
 
         while (true) {
             HMisplacedNode current = fringe.poll();
-            nodesExpanded ++;
+            nodesExpanded++;
             Board b = current.boardState;
 
             if (b.isGoalState()) {

@@ -1,66 +1,107 @@
-// I considered that the agent always start at the bottom right, even though the start states will differ
-// to make the problem harder/easier
 public class Solver {
     public static void main(String[] args) {
-//        int bf = new BFSearch(createBoardState(3)).go();
-//        System.out.println("BFSearch: " + bf);
+        // Prove methods work
 
-//        int df = 0;
-//        int id = 0;
-//        int n = 100000;
-//        for (int i = 0; i < n; i++) {
-//            df += new DFSearch(createBoardState(3)).go();
-//            id += new IDSearch(createBoardState(3)).go();
-//        }
-//        System.out.println("DFSearch: " + df/n);
-//        System.out.println("IDSearch: " + id/n);
-//
-//        int mis = new ASearchMisplaced(createBoardState(3)).go();
-//        int man = new ASearchManhattan(createBoardState(3)).go();
-//
-//        // printing 3x3 results
-//        System.out.println("ASearchMisplaced: " + mis);
-//        System.out.println("ASearchManhattan: " + man);
-//        System.out.println();
-
-        //Testing A* over larger inputs
-//        int mis  = new ASearchMisplaced(createBoardState(3)).go();
-//        int man = new ASearchManhattan(createBoardState(3)).go();
-//        System.out.println("Misplaced size 3: " + mis);
-//        System.out.println("Manhattan size 3: " + man);
-//        mis  = new ASearchMisplaced(createBoardState(4)).go();
-//        man = new ASearchManhattan(createBoardState(4)).go();
-//        System.out.println("Misplaced size 4: " + mis);
-//        System.out.println("Manhattan size 4: " + man);
-//        mis  = new ASearchMisplaced(createBoardState(5)).go();
-//        man = new ASearchManhattan(createBoardState(5)).go();
-//        System.out.println("Misplaced size 5: " + mis);
-//        System.out.println("Manhattan size 5: " + man);
-
-
-
+        new BFSearch(createStart1(4)).go();
+        new DFSearch(createStart1(4)).go();
+        new IDSearch(createStart1(4)).go();
     }
 
-    public static Board createBoardFromGoal(int size, int moves) {
-        Board board = new Board(createGoalState(size), size - 1, size - 1);
+    // All letters on the last row
+    public static int[][] createStart6(int size) {
+        int[][] state = new int[size][size];
 
-        //iterate on moves and make the agent move to a random place and then return the board
-        //use this method several times to test search methods.
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size; j++) {
+                state[i][j] = 0;
+            }
+        }
+        for (int j = 0; j < size - 1; j++) {
+            state[size - 1][j] = 'A' + j;
+        }
+
+        return state;
     }
 
-    public static int[][] createGoalState(int size) {
-        int[][] b = new int[size][size];
+    // All letters on the penultimate row
+    public static int[][] createStart5(int size) {
+        int[][] state = new int[size][size];
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (j == size / 2) {
-                    b[i][j] = 'A' + i - 1;
+                state[i][j] = 0;
+            }
+        }
+        for (int j = 0; j < size - 1; j++) {
+            state[size - 2][j] = 'A' + j;
+        }
+
+        return state;
+    }
+
+    // All letters on the main diagonal
+    public static int[][] createStart4(int size) {
+        int[][] state = new int[size][size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (i == j) {
+                    state[i][j] = i + 'A';
                 } else {
-                    b[i][j] = 0;
+                    state[i][j] = 0;
                 }
             }
         }
 
-        return b;
+        return state;
+    }
+
+    // All letters on the diagonal below the main top left - bottom right diagonal
+    public static int[][] createStart3(int size) {
+        int[][] state = new int[size][size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (i == j + 1) {
+                    state[i][j] = i + 'A' - 1;
+                } else {
+                    state[i][j] = 0;
+                }
+            }
+        }
+
+        return state;
+    }
+
+    // All letters on the column to the right of the goal column, shifted up
+    public static int[][] createStart2(int size) {
+        int[][] state = new int[size][size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                state[i][j] = 0;
+            }
+        }
+        for (int i = 0; i < size - 1; i++) {
+            state[i][size / 2] = 'A' + i;
+        }
+
+        return state;
+    }
+
+    // All letters on the goal column shifted up one block
+    public static int[][] createStart1(int size) {
+        int[][] state = new int[size][size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                state[i][j] = 0;
+            }
+        }
+        for (int i = 0; i < size - 1; i++) {
+            state[i][size / 2 - 1] = 'A' + i;
+        }
+
+        return state;
     }
 }

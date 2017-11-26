@@ -1,12 +1,12 @@
-import java.util.Stack;
+import java.util.ArrayDeque;
 
 // This class implements Depth-first tree search
 public class DFSearch {
-    private Stack<Node> fringe;
+    private ArrayDeque<Node> fringe;    // used as LIFO
 
     public DFSearch(int[][] state) {
         Board initial = new Board(state, state.length - 1, state.length - 1);
-        fringe = new Stack<>();
+        fringe = new ArrayDeque<>();
         fringe.push(new Node(null, 0, initial));
     }
 
@@ -15,16 +15,19 @@ public class DFSearch {
 
         while (true) {
             Node current = fringe.pop();
-            nodesExpanded ++;
+            nodesExpanded++;
             Board b = current.boardState;
 
             if (b.isGoalState()) {
-//                System.out.println("~~~~~\nDFS found a solution at depth: " + current.depth);
-//                System.out.println("Number of nodes expanded: " + nodesExpanded);
-//                b.printState();
+                // Print path to goal
+                System.out.println("~~~~\nDFSearch expanded " + nodesExpanded + " nodes");
+//                current.printPath();
+
                 return nodesExpanded;
             } else {
-                fringe.addAll(current.getSuccessors(true));
+                for (Node n : current.getSuccessors(true)) {
+                    fringe.push(n);
+                }
             }
         }
     }
