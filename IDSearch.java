@@ -1,14 +1,11 @@
-import java.util.ArrayDeque;
-
 public class IDSearch {
-    private ArrayDeque<Node> fringe;    // used as LIFO
     private boolean end;
     private int nodesExpanded;
+    private Node root;
 
     public IDSearch(int[][] state) {
         Board initial = new Board(state, state.length - 1, state.length - 1);
-        fringe = new ArrayDeque<>();
-        fringe.push(new Node(null, 0, initial));
+        root = new Node(null, 0, initial);
     }
 
     public int go() {
@@ -17,7 +14,7 @@ public class IDSearch {
         Node current = null;
 
         for (int maxDepth = 0; !end; maxDepth++) {
-            current = depthLimitedSearch(maxDepth);
+            current = recursiveDLS(root, maxDepth);
         }
 
         // Print path to goal
@@ -26,29 +23,29 @@ public class IDSearch {
         return nodesExpanded;
     }
 
-    private Node depthLimitedSearch(int maxDepth) {
-        Node current = fringe.pop();
+    private Node recursiveDLS(Node current, int maxDepth) {
+        nodesExpanded++;
 
-        while (current.depth <= maxDepth) {
-            nodesExpanded++;
+        // Print statements to see order of node expansion
+        System.out.println("Depth: " + current.depth);
+        current.boardState.printState();
+        System.out.println();
 
-            // Print statements to see order of node expansion
-            System.out.println("Depth: " + current.depth);
-            current.boardState.printState();
-            System.out.println();
-
-            if (current.boardState.isGoalState()) {
-                end = true;
-                return current;
-            } else {
-                for (Node n : current.getSuccessors(true)) {
-                    fringe.push(n);
+        if (current.boardState.isGoalState()) {
+            end = true;
+            return current;
+        } else if (current.depth == maxDepth) {
+            return null;
+        } else {
+            for (Node n : current.getSuccessors(true)) {
+                Node result = recursiveDLS(n, maxDepth);
+                if (result == null) {
+                    return null;
+                } else {
+                    return result;
                 }
             }
-
-            current = fringe.pop();
         }
-        System.out.println("Stopped");
         return null;
     }
 }
