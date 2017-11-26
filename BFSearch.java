@@ -1,8 +1,7 @@
 import java.util.ArrayDeque;
 
-// This class implements Breadth-first tree search
 public class BFSearch {
-    private ArrayDeque<Node> fringe; // used as FIFO
+    private ArrayDeque<Node> fringe;    // used as FIFO
 
     public BFSearch(int[][] state) {
         Board initial = new Board(state, state.length - 1, state.length - 1);
@@ -16,9 +15,8 @@ public class BFSearch {
         while (true) {
             Node current = fringe.poll();
             nodesExpanded++;
-            Board b = current.boardState;
 
-            if (b.isGoalState()) {
+            if (current.boardState.isGoalState()) {
                 // Print path to goal
                 System.out.println("~~~~\nBFSearch expanded: " + nodesExpanded + " nodes");
                 current.printPath();

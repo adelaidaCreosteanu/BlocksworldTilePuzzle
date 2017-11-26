@@ -14,21 +14,21 @@ public class HManhattanNode extends Node implements Comparable<HManhattanNode> {
     }
 
     private int manhattanDistance() {
-        int n = 0;
+        int cost = 0;
         int[][] state = boardState.getState();
         int size = state.length;
-        int col = size / 2;   // expected goal column
+        int col = size / 2 - 1;   // expected goal column
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (state[i][j] != 0) {
                     int expectedi = state[i][j] - 'A' + 1;
-                    n += Math.abs(expectedi - i) + Math.abs(col - j);
+                    cost += Math.abs(expectedi - i) + Math.abs(col - j);
                 }
             }
         }
 
-        return n;
+        return cost;
     }
 
     public ArrayList<HManhattanNode> getSuccessors() {
@@ -36,12 +36,10 @@ public class HManhattanNode extends Node implements Comparable<HManhattanNode> {
         Position curr = new Position(boardState.getAgentX(), boardState.getAgentY());
 
         for (Position newP : curr.getAdjacent(false)) {
-            if (boardState.isLegal(newP.x, newP.y)) {
-                Board b = boardState.cloneBoard();
-                // Update agent position:
-                b.moveAgent(newP.x, newP.y);
-                list.add(new HManhattanNode(this, depth + 1, b));
-            }
+            Board b = boardState.cloneBoard();
+            // Update agent position:
+            b.moveAgent(newP.x, newP.y);
+            list.add(new HManhattanNode(this, depth + 1, b));
         }
 
         return list;

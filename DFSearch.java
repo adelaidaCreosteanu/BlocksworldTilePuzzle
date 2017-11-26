@@ -1,6 +1,5 @@
 import java.util.ArrayDeque;
 
-// This class implements Depth-first tree search
 public class DFSearch {
     private ArrayDeque<Node> fringe;    // used as LIFO
 
@@ -16,9 +15,8 @@ public class DFSearch {
         while (true) {
             Node current = fringe.pop();
             nodesExpanded++;
-            Board b = current.boardState;
 
-            if (b.isGoalState()) {
+            if (current.boardState.isGoalState()) {
                 // Print path to goal
                 System.out.println("~~~~\nDFSearch expanded " + nodesExpanded + " nodes");
 //                current.printPath();

@@ -1,14 +1,13 @@
-import java.util.Stack;
+import java.util.ArrayDeque;
 
-// This class implements iterative deepening search
 public class IDSearch {
-    private Stack<Node> fringe;
+    private ArrayDeque<Node> fringe;    // used as LIFO
     private boolean end;
     private int nodesExpanded;
 
     public IDSearch(int[][] state) {
         Board initial = new Board(state, state.length - 1, state.length - 1);
-        fringe = new Stack<>();
+        fringe = new ArrayDeque<>();
         fringe.push(new Node(null, 0, initial));
     }
 
@@ -32,13 +31,14 @@ public class IDSearch {
 
         while (current.depth <= maxDepth) {
             nodesExpanded++;
-            Board b = current.boardState;
 
-            if (b.isGoalState()) {
+            if (current.boardState.isGoalState()) {
                 end = true;
                 return current;
             } else {
-                fringe.addAll(current.getSuccessors(true));
+                for (Node n : current.getSuccessors(true)) {
+                    fringe.push(n);
+                }
             }
 
             current = fringe.pop();

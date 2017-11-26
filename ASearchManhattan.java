@@ -15,12 +15,11 @@ public class ASearchManhattan {
         while (true) {
             HManhattanNode current = fringe.poll();
             nodesExpanded++;
-            Board b = current.boardState;
 
-            if (b.isGoalState()) {
-//                System.out.println("~~~~~\nA* using manhattan distance heuristic found a solution at depth: " + current.depth);
-//                System.out.println("Number of nodes expanded: " + nodesExpanded);
-//                b.printState();
+            if (current.boardState.isGoalState()) {
+                // Print path to goal
+                System.out.println("~~~~\nA* search with manhattan heuristic expanded: " + nodesExpanded + " nodes");
+                current.printPath();
                 return nodesExpanded;
             } else {
                 fringe.addAll(current.getSuccessors());
