@@ -20,7 +20,7 @@ public class HMisplacedNode extends Node implements Comparable<HMisplacedNode> {
         int cost = 0;
         int[][] state = boardState.getState();
         int size = state.length;
-        int col = size / 2 - 1;     // expected goal column
+        int col = (size - 1) / 2;     // expected goal column
 
         for (int i = 1; i < state.length; i++) {
             int expected = 'A' + i - 1;
@@ -41,10 +41,12 @@ public class HMisplacedNode extends Node implements Comparable<HMisplacedNode> {
         Position curr = new Position(boardState.getAgentX(), boardState.getAgentY());
 
         for (Position newP : curr.getAdjacent(false)) {
-            Board b = boardState.cloneBoard();
-            // Update agent position:
-            b.moveAgent(newP.x, newP.y);
-            list.add(new HMisplacedNode(this, depth + 1, b));
+            if (boardState.isLegal(newP)) {
+                Board b = boardState.cloneBoard();
+                // Update agent position:
+                b.moveAgent(newP);
+                list.add(new HMisplacedNode(this, depth + 1, b));
+            }
         }
 
         return list;

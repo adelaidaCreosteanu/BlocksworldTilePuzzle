@@ -16,6 +16,11 @@ public class DFSearch {
             Node current = fringe.pop();
             nodesExpanded++;
 
+            // Print statements to see order of node expansion
+            System.out.println("Depth: " + current.depth);
+            current.boardState.printState();
+            System.out.println();
+
             if (current.boardState.isGoalState()) {
                 // Print path to goal
                 System.out.println("~~~~\nDFSearch expanded " + nodesExpanded + " nodes");

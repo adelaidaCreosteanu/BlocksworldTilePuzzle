@@ -19,10 +19,12 @@ public class Node {
         Position curr = new Position(boardState.getAgentX(), boardState.getAgentY());
 
         for (Position newP : curr.getAdjacent(randomise)) {
-            Board b = boardState.cloneBoard();
-            // Update agent position:
-            b.moveAgent(newP.x, newP.y);
-            list.add(new Node(this, depth + 1, b));
+            if (boardState.isLegal(newP)) {
+                Board b = boardState.cloneBoard();
+                // Update agent position:
+                b.moveAgent(newP);
+                list.add(new Node(this, depth + 1, b));
+            }
         }
 
         return list;

@@ -39,11 +39,11 @@ public class Board {
     /* New position is only accepted if it's adjacent to current position and
      * within borders of the puzzle board.
      */
-    public boolean isLegal (int x, int y) {
-        if (x < 0 || y < 0 || x >= size || y >= size) {     // position out of borders
+    public boolean isLegal(Position p) {
+        if (p.x < 0 || p.y < 0 || p.x >= size || p.y >= size) {     // position out of borders
             return false;
         }
-        if (Math.abs(agentX-x) + Math.abs(agentY-y) != 1) { // new position is not adjacent to agent
+        if (Math.abs(agentX - p.x) + Math.abs(agentY - p.y) != 1) { // new position is not adjacent to agent
             return false;
         }
         return true;
@@ -52,16 +52,16 @@ public class Board {
     /*  If move is legal, swap values of current agent position and new position where agent
      *  will move to. Then update agent position.
      */
-    public void moveAgent(int newX, int newY){
-        if (isLegal(newX, newY)) {
+    public void moveAgent(Position p) {
+        if (isLegal(p)) {
             // Swap values in the matrix
-            int aux = state[newX][newY];
-            state[newX][newY] = state[agentX][agentY];
+            int aux = state[p.x][p.y];
+            state[p.x][p.y] = state[agentX][agentY];
             state[agentX][agentY] = aux;
 
             // Update agent position
-            agentX = newX;
-            agentY = newY;
+            agentX = p.x;
+            agentY = p.y;
         }
     }
 
@@ -71,7 +71,7 @@ public class Board {
      *  (even size). First row is expected to be empty.
      */
     public boolean isGoalState(){
-        int col = size / 2 - 1;
+        int col = (size - 1) / 2;
 
         for (int i = 1; i < size; i++) {    // Start from second row
             int expected = 'A' + i - 1;
@@ -91,7 +91,7 @@ public class Board {
         for (int i = 0; i < size; i ++) {
             for (int j = 0; j < size; j ++) {
                 if (i == agentX && j == agentY) {
-                    System.out.print("! ");
+                    System.out.print("@ ");
                 }else if (state[i][j] == 0) {
                     System.out.print("0 ");
                 } else {

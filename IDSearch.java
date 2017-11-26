@@ -32,6 +32,11 @@ public class IDSearch {
         while (current.depth <= maxDepth) {
             nodesExpanded++;
 
+            // Print statements to see order of node expansion
+            System.out.println("Depth: " + current.depth);
+            current.boardState.printState();
+            System.out.println();
+
             if (current.boardState.isGoalState()) {
                 end = true;
                 return current;
@@ -43,6 +48,7 @@ public class IDSearch {
 
             current = fringe.pop();
         }
+        System.out.println("Stopped");
         return null;
     }
 }
