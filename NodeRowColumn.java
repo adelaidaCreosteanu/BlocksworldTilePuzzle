@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class NodeRow_column extends Node implements Comparable<NodeRow_column> {
+public class NodeRowColumn extends Node implements Comparable<NodeRowColumn> {
     private int cost;
 
-    public NodeRow_column(NodeRow_column parent, int depth, Board state) {
+    public NodeRowColumn(NodeRowColumn parent, int depth, Board state) {
         super(parent, depth, state);
 
         if (parent == null) {
@@ -32,8 +32,8 @@ public class NodeRow_column extends Node implements Comparable<NodeRow_column> {
         return cost;
     }
 
-    public ArrayList<NodeRow_column> getSuccessors() {
-        ArrayList<NodeRow_column> list = new ArrayList<>(4);
+    public ArrayList<NodeRowColumn> getSuccessors() {
+        ArrayList<NodeRowColumn> list = new ArrayList<>(4);
         Position curr = new Position(boardState.getAgentX(), boardState.getAgentY());
 
         for (Position newP : curr.getAdjacent(false)) {
@@ -41,7 +41,7 @@ public class NodeRow_column extends Node implements Comparable<NodeRow_column> {
                 Board b = boardState.cloneBoard();
                 // Update agent position:
                 b.moveAgent(newP);
-                list.add(new NodeRow_column(this, depth + 1, b));
+                list.add(new NodeRowColumn(this, depth + 1, b));
             }
         }
 
@@ -49,7 +49,7 @@ public class NodeRow_column extends Node implements Comparable<NodeRow_column> {
     }
 
     @Override
-    public int compareTo(NodeRow_column that) {
+    public int compareTo(NodeRowColumn that) {
         return this.cost - that.cost;
     }
 }
