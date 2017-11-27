@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class HManhattanNode extends Node implements Comparable<HManhattanNode> {
+public class ManhattanNode extends Node implements Comparable<ManhattanNode> {
     private int cost;
 
-    public HManhattanNode(HManhattanNode parent, int depth, Board state) {
+    public ManhattanNode(ManhattanNode parent, int depth, Board state) {
         super(parent, depth, state);
 
         if (parent == null) {
@@ -31,8 +31,8 @@ public class HManhattanNode extends Node implements Comparable<HManhattanNode> {
         return cost;
     }
 
-    public ArrayList<HManhattanNode> getSuccessors() {
-        ArrayList<HManhattanNode> list = new ArrayList<>(4);
+    public ArrayList<ManhattanNode> getSuccessors() {
+        ArrayList<ManhattanNode> list = new ArrayList<>(4);
         Position curr = new Position(boardState.getAgentX(), boardState.getAgentY());
 
         for (Position newP : curr.getAdjacent(false)) {
@@ -40,7 +40,7 @@ public class HManhattanNode extends Node implements Comparable<HManhattanNode> {
                 Board b = boardState.cloneBoard();
                 // Update agent position:
                 b.moveAgent(newP);
-                list.add(new HManhattanNode(this, depth + 1, b));
+                list.add(new ManhattanNode(this, depth + 1, b));
             }
         }
 
@@ -48,7 +48,7 @@ public class HManhattanNode extends Node implements Comparable<HManhattanNode> {
     }
 
     @Override
-    public int compareTo(HManhattanNode that) {
+    public int compareTo(ManhattanNode that) {
         return this.cost - that.cost;
     }
 }
