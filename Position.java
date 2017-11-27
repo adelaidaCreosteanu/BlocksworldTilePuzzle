@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Position {
-    public final int x;     // cannot be modified
+    public final int x;
     public final int y;
 
     public Position(int x, int y) {
@@ -10,7 +10,7 @@ public class Position {
         this.y = y;
     }
 
-    /* Can contain illegal position (out of board bounds) but this is handled
+    /* Can contain illegal positions (out of board bounds) but this is handled
      * in the Board class in the isLegal(x,y) method.
      */
     public ArrayList<Position> getAdjacent(boolean randomise) {

@@ -17,14 +17,12 @@ public class BFSearch {
             nodesExpanded++;
 
             // Print statements to see order of node expansion
-            System.out.println("Depth: " + current.depth);
-            current.boardState.printState();
-            System.out.println();
+//            System.out.println("Depth: " + current.depth);
+//            current.boardState.printState();
+//            System.out.println();
 
             if (current.boardState.isGoalState()) {
-                // Print path to goal
                 System.out.println("~~~~\nBFSearch expanded: " + nodesExpanded + " nodes");
-//                current.printPath();
                 return nodesExpanded;
             } else {
                 for (Node n : current.getSuccessors(false)) {

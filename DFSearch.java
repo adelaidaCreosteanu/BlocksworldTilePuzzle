@@ -22,10 +22,7 @@ public class DFSearch {
             System.out.println();
 
             if (current.boardState.isGoalState()) {
-                // Print path to goal
                 System.out.println("~~~~\nDFSearch expanded " + nodesExpanded + " nodes");
-//                current.printPath();
-
                 return nodesExpanded;
             } else {
                 for (Node n : current.getSuccessors(true)) {

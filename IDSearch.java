@@ -11,15 +11,12 @@ public class IDSearch {
     public int go() {
         end = false;
         nodesExpanded = 0;
-        Node current = null;
 
         for (int maxDepth = 0; !end; maxDepth++) {
-            current = recursiveDLS(root, maxDepth);
+            recursiveDLS(root, maxDepth);
         }
 
-        // Print path to goal
         System.out.println("~~~~\nIDSearch expanded: " + nodesExpanded + " nodes");
-//        current.printPath();
         return nodesExpanded;
     }
 

@@ -10,7 +10,6 @@ public class NodeHamming extends NodeHeuristic {
 
     // Counts how many blocks are not in their goal place
     // Adds 1 if it's worse than it's parent
-    @Override
     protected int heuristic() {
         int cost = 0;
         int[][] state = boardState.getState();

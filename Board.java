@@ -40,10 +40,12 @@ public class Board {
      * within borders of the puzzle board.
      */
     public boolean isLegal(Position p) {
-        if (p.x < 0 || p.y < 0 || p.x >= size || p.y >= size) {     // position out of borders
+        // position out of borders
+        if (p.x < 0 || p.y < 0 || p.x >= size || p.y >= size) {
             return false;
         }
-        if (Math.abs(agentX - p.x) + Math.abs(agentY - p.y) != 1) { // new position is not adjacent to agent
+        // position not adjacent to agent
+        if (Math.abs(agentX - p.x) + Math.abs(agentY - p.y) != 1) {
             return false;
         }
         return true;
@@ -83,9 +85,8 @@ public class Board {
         return true;
     }
 
-    /*
-     *  This class is mainly for testing purposes and shouldn't be used when running the search algorithms.
-     *  To represent the agent, it prints "!".
+    /*  This method is for debugging purposes.
+     *  It prints "@" for the agent
      */
     public void printState() {
         for (int i = 0; i < size; i ++) {

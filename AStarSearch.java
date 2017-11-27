@@ -33,8 +33,14 @@ public class AStarSearch {
             NodeHeuristic current = fringe.poll();
             nodesExpanded++;
 
+            // Print statements to see order of node expansion
+//            System.out.println("Depth: " + current.depth + " ~~~ Cost: " + current.cost);
+//            current.boardState.printState();
+//            System.out.println();
+
             if (current.boardState.isGoalState()) {
                 System.out.println("~~~~\n" + heuristic + " heuristic expanded: " + nodesExpanded);
+                System.out.println("Final cost: " + current.cost);
                 return nodesExpanded;
             } else {
                 fringe.addAll(current.getSuccessors());

@@ -5,8 +5,7 @@ public class NodeManhattan extends NodeHeuristic {
         super(parent, depth, state);
     }
 
-    //  // Calculates the manhattan distance for each letter block and returns the sum
-    @Override
+    // Calculates the sum of the manhattan distance for each letter block
     protected int heuristic() {
         int cost = 0;
         int[][] state = boardState.getState();

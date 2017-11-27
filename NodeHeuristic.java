@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public abstract class NodeHeuristic extends Node implements Comparable<NodeHeuristic> {
-    private int cost;
+    protected int cost;
 
     public NodeHeuristic(NodeHeuristic parent, int depth, Board state) {
         super(parent, depth, state);

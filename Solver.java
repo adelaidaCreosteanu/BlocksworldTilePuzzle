@@ -2,12 +2,19 @@ public class Solver {
     public static void main(String[] args) {
         // Prove methods work
 
-        new BFSearch(createStart1(4)).go();
-        new DFSearch(createStart1(4)).go();
-        new IDSearch(createStart1(4)).go();
+//        new BFSearch(createStart6(4)).go();
+//        new DFSearch(createStart6(4)).go();
+//        new IDSearch(createStart6(4)).go();
+
+        new AStarSearch(createStart3(4), AStarSearch.MANHATTAN).go();
+        new AStarSearch(createStart3(4), AStarSearch.HAMMING).go();
+        new AStarSearch(createStart3(4), AStarSearch.ROW_COLUMN).go();
     }
 
-    // All letters on the last row
+    //    0 0 0 0
+//    0 0 0 0
+//    0 0 0 0
+//    A B C 0
     public static int[][] createStart6(int size) {
         int[][] state = new int[size][size];
 
@@ -23,7 +30,10 @@ public class Solver {
         return state;
     }
 
-    // All letters on the penultimate row
+    //    0 0 0 0
+//    0 0 0 0
+//    A B C 0
+//    0 0 0 0
     public static int[][] createStart5(int size) {
         int[][] state = new int[size][size];
 
@@ -39,7 +49,10 @@ public class Solver {
         return state;
     }
 
-    // All letters on the main diagonal
+    //    A 0 0 0
+//    0 B 0 0
+//    0 0 C 0
+//    0 0 0 0
     public static int[][] createStart4(int size) {
         int[][] state = new int[size][size];
 
@@ -56,7 +69,10 @@ public class Solver {
         return state;
     }
 
-    // All letters on the diagonal below the main top left - bottom right diagonal
+    //    0 0 0 0
+//    A 0 0 0
+//    0 B 0 0
+//    0 0 C 0
     public static int[][] createStart3(int size) {
         int[][] state = new int[size][size];
 
@@ -73,7 +89,10 @@ public class Solver {
         return state;
     }
 
-    // All letters on the column to the right of the goal column, shifted up
+    //    0 0 A 0
+//    0 0 B 0
+//    0 0 C 0
+//    0 0 0 0
     public static int[][] createStart2(int size) {
         int[][] state = new int[size][size];
 
@@ -83,13 +102,16 @@ public class Solver {
             }
         }
         for (int i = 0; i < size - 1; i++) {
-            state[i][size / 2] = 'A' + i;
+            state[i][(size - 1) / 2 + 1] = 'A' + i;
         }
 
         return state;
     }
 
-    // All letters on the goal column shifted up one block
+    //    0 A 0 0
+//    0 B 0 0
+//    0 C 0 0
+//    0 0 0 0
     public static int[][] createStart1(int size) {
         int[][] state = new int[size][size];
 
@@ -99,7 +121,7 @@ public class Solver {
             }
         }
         for (int i = 0; i < size - 1; i++) {
-            state[i][size / 2 - 1] = 'A' + i;
+            state[i][(size - 1) / 2] = 'A' + i;
         }
 
         return state;

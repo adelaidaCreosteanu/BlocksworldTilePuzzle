@@ -7,7 +7,6 @@ public class NodeRowColumn extends NodeHeuristic {
 
     // Calculates how many blocks are out of their goal column plus
     // how many are out of their goal row
-    @Override
     protected int heuristic() {
         int cost = 0;
         int[][] state = boardState.getState();
