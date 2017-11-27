@@ -1,25 +1,22 @@
 import java.util.PriorityQueue;
 
-public class AShamming {
-    private PriorityQueue<NodeHamming> fringe;
+public class ASrow_column {
+    private PriorityQueue<NodeRow_column> fringe;
 
-    public AShamming(int[][] state) {
+    public ASrow_column(int[][] state) {
         Board initial = new Board(state, state.length - 1, state.length - 1);
         fringe = new PriorityQueue<>();
-        fringe.add(new NodeHamming(null, 0, initial));
+        fringe.add(new NodeRow_column(null, 0, initial));
     }
 
     public int go() {
         int nodesExpanded = 0;
 
         while (true) {
-            NodeHamming current = fringe.poll();
+            NodeRow_column current = fringe.poll();
             nodesExpanded++;
 
             if (current.boardState.isGoalState()) {
-                // Print path to goal
-                System.out.println("~~~~\nA* search expanded: " + nodesExpanded + " nodes");
-                current.printPath();
                 return nodesExpanded;
             } else {
                 fringe.addAll(current.getSuccessors());

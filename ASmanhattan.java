@@ -1,19 +1,19 @@
 import java.util.PriorityQueue;
 
 public class ASmanhattan {
-    private PriorityQueue<ManhattanNode> fringe;
+    private PriorityQueue<NodeManhattan> fringe;
 
     public ASmanhattan(int[][] state) {
         Board initial = new Board(state, state.length - 1, state.length - 1);
         fringe = new PriorityQueue<>();
-        fringe.add(new ManhattanNode(null, 0, initial));
+        fringe.add(new NodeManhattan(null, 0, initial));
     }
 
     public int go() {
         int nodesExpanded = 0;
 
         while (true) {
-            ManhattanNode current = fringe.poll();
+            NodeManhattan current = fringe.poll();
             nodesExpanded++;
 
             if (current.boardState.isGoalState()) {

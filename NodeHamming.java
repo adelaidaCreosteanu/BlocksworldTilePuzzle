@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
-public class HammingNode extends Node implements Comparable<HammingNode> {
+public class NodeHamming extends Node implements Comparable<NodeHamming> {
     private int cost;
-    private HammingNode parent;
+    private NodeHamming parent;
 
-    public HammingNode(HammingNode parent, int depth, Board state) {
+    public NodeHamming(NodeHamming parent, int depth, Board state) {
         super(parent, depth, state);
         this.parent = parent;
 
@@ -36,8 +36,8 @@ public class HammingNode extends Node implements Comparable<HammingNode> {
         return cost;
     }
 
-    public ArrayList<HammingNode> getSuccessors() {
-        ArrayList<HammingNode> list = new ArrayList<>(4);
+    public ArrayList<NodeHamming> getSuccessors() {
+        ArrayList<NodeHamming> list = new ArrayList<>(4);
         Position curr = new Position(boardState.getAgentX(), boardState.getAgentY());
 
         for (Position newP : curr.getAdjacent(false)) {
@@ -45,7 +45,7 @@ public class HammingNode extends Node implements Comparable<HammingNode> {
                 Board b = boardState.cloneBoard();
                 // Update agent position:
                 b.moveAgent(newP);
-                list.add(new HammingNode(this, depth + 1, b));
+                list.add(new NodeHamming(this, depth + 1, b));
             }
         }
 
@@ -53,7 +53,7 @@ public class HammingNode extends Node implements Comparable<HammingNode> {
     }
 
     @Override
-    public int compareTo(HammingNode that) {
+    public int compareTo(NodeHamming that) {
         return this.cost - that.cost;
     }
 }
