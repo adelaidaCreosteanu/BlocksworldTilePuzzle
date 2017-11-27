@@ -1,19 +1,13 @@
 import java.util.ArrayList;
 
-public class NodeManhattan extends Node implements Comparable<NodeManhattan> {
-    private int cost;
-
+public class NodeManhattan extends NodeHeuristic {
     public NodeManhattan(NodeManhattan parent, int depth, Board state) {
         super(parent, depth, state);
-
-        if (parent == null) {
-            cost = manhattanDistance();
-        } else {
-            cost = parent.cost + manhattanDistance();
-        }
     }
 
-    private int manhattanDistance() {
+    //  // Calculates the manhattan distance for each letter block and returns the sum
+    @Override
+    protected int heuristic() {
         int cost = 0;
         int[][] state = boardState.getState();
         int size = state.length;
@@ -31,8 +25,8 @@ public class NodeManhattan extends Node implements Comparable<NodeManhattan> {
         return cost;
     }
 
-    public ArrayList<NodeManhattan> getSuccessors() {
-        ArrayList<NodeManhattan> list = new ArrayList<>(4);
+    public ArrayList<NodeHeuristic> getSuccessors() {
+        ArrayList<NodeHeuristic> list = new ArrayList<>(4);
         Position curr = new Position(boardState.getAgentX(), boardState.getAgentY());
 
         for (Position newP : curr.getAdjacent(false)) {
@@ -45,10 +39,5 @@ public class NodeManhattan extends Node implements Comparable<NodeManhattan> {
         }
 
         return list;
-    }
-
-    @Override
-    public int compareTo(NodeManhattan that) {
-        return this.cost - that.cost;
     }
 }

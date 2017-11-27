@@ -1,22 +1,17 @@
 import java.util.ArrayList;
 
-public class NodeHamming extends Node implements Comparable<NodeHamming> {
-    private int cost;
+public class NodeHamming extends NodeHeuristic {
     private NodeHamming parent;
 
     public NodeHamming(NodeHamming parent, int depth, Board state) {
         super(parent, depth, state);
         this.parent = parent;
-
-        if (parent == null) {
-            cost = misplacedTiles();
-        } else {
-            cost = parent.cost + misplacedTiles();
-        }
     }
 
     // Counts how many blocks are not in their goal place
-    private int misplacedTiles() {
+    // Adds 1 if it's worse than it's parent
+    @Override
+    protected int heuristic() {
         int cost = 0;
         int[][] state = boardState.getState();
         int size = state.length;
@@ -29,15 +24,15 @@ public class NodeHamming extends Node implements Comparable<NodeHamming> {
             }
         }
 
-        if (parent != null && parent.misplacedTiles() < cost) {
+        if (parent != null && parent.heuristic() < cost) {
             cost += 1;
         }
 
         return cost;
     }
 
-    public ArrayList<NodeHamming> getSuccessors() {
-        ArrayList<NodeHamming> list = new ArrayList<>(4);
+    public ArrayList<NodeHeuristic> getSuccessors() {
+        ArrayList<NodeHeuristic> list = new ArrayList<>(4);
         Position curr = new Position(boardState.getAgentX(), boardState.getAgentY());
 
         for (Position newP : curr.getAdjacent(false)) {
@@ -50,10 +45,5 @@ public class NodeHamming extends Node implements Comparable<NodeHamming> {
         }
 
         return list;
-    }
-
-    @Override
-    public int compareTo(NodeHamming that) {
-        return this.cost - that.cost;
     }
 }
