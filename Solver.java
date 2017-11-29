@@ -2,13 +2,60 @@ public class Solver {
     public static void main(String[] args) {
         // Prove methods work
 
-//        new BFSearch(createStart6(4)).go();
-//        new DFSearch(createStart6(4)).go();
-//        new IDSearch(createStart6(4)).go();
+        new AStarSearch(createStart6(4), AStarSearch.HAMMING).go();
 
-        new AStarSearch(createStart3(4), AStarSearch.MANHATTAN).go();
-        new AStarSearch(createStart3(4), AStarSearch.HAMMING).go();
-        new AStarSearch(createStart3(4), AStarSearch.ROW_COLUMN).go();
+//        int[][][] boards = {createStart1(3), createStart2(3), createStart3(3), createStart4(3), createStart5(3), createStart6(3)};
+//        int[][][] bigBoards = {createStart1(4), createStart2(4), createStart3(4), createStart4(4), createStart5(4), createStart6(4)};
+//
+//        System.out.println("3x3\n");
+//        int n = 1000;
+//        for (int i = 1; i <= boards.length; i ++) {
+//            int df = 0, id = 0;
+//            System.out.println(i);
+//            new BFSearch(copyMatrix(boards[i])).go();
+//            for (int j = 0; j < n; j ++) {
+//                df += new DFSearch(copyMatrix(boards[i])).go();
+//                id += new IDSearch(copyMatrix(boards[i])).go();
+//            }
+//            System.out.println("~~~~\nDFSearch expanded: " + df/n);
+//            System.out.println("~~~~\nIDSearch expanded: " + id/n);
+//
+//            new AStarSearch(copyMatrix(boards[i]), AStarSearch.MANHATTAN).go();
+//            new AStarSearch(copyMatrix(boards[i]), AStarSearch.HAMMING).go();
+//            new AStarSearch(copyMatrix(boards[i]), AStarSearch.ROW_COLUMN).go();
+//        }
+//
+//        System.out.println();
+//        System.out.println("4x4\n");
+//        n = 50;
+//        for (int i = 1; i <= bigBoards.length; i ++) {
+//            int df = 0, id = 0;
+//            System.out.println(i);
+//
+//            new BFSearch(copyMatrix(bigBoards[i])).go();
+//            for (int j = 0; j < n; j ++) {
+//                df += new DFSearch(copyMatrix(bigBoards[i])).go();
+//                id += new IDSearch(copyMatrix(bigBoards[i])).go();
+//            }
+//            System.out.println("~~~~\nDFSearch expanded: " + df/n);
+//            System.out.println("~~~~\nIDSearch expanded: " + id/n);
+//
+//            new AStarSearch(copyMatrix(bigBoards[i]), AStarSearch.MANHATTAN).go();
+//            new AStarSearch(copyMatrix(bigBoards[i]), AStarSearch.HAMMING).go();
+//            new AStarSearch(copyMatrix(bigBoards[i]), AStarSearch.ROW_COLUMN).go();
+//        }
+    }
+
+    static int[][] copyMatrix(int[][] state) {
+        int size = state.length;
+        int[][] copy = new int[size][size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                copy[i][j] = state[i][j];
+            }
+        }
+        return copy;
     }
 
     //    0 0 0 0
