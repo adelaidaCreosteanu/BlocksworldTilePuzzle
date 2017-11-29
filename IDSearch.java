@@ -23,10 +23,6 @@ public class IDSearch {
     private Node recursiveDLS(Node current, int maxDepth) {
         nodesExpanded++;
 
-        // Print statements to see order of node expansion
-        System.out.println("Depth: " + current.depth);
-        current.boardState.printState();
-        System.out.println();
 
         if (current.boardState.isGoalState()) {
             end = true;

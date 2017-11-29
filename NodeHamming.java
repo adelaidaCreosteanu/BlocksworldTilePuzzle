@@ -1,11 +1,8 @@
 import java.util.ArrayList;
 
 public class NodeHamming extends NodeHeuristic {
-    private NodeHamming parent;
-
     public NodeHamming(NodeHamming parent, int depth, Board state) {
         super(parent, depth, state);
-        this.parent = parent;
     }
 
     // Counts how many blocks are not in their goal place
@@ -21,10 +18,6 @@ public class NodeHamming extends NodeHeuristic {
             if (state[i][col] != expected) {
                 cost++;
             }
-        }
-
-        if (parent != null && parent.heuristic() < cost) {
-            cost += 1;
         }
 
         return cost;
